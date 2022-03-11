@@ -1,18 +1,16 @@
 import React from "react";
-import { useRouter } from "next/router";
 
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import { fetchUserReadme } from "../lib/UserataFetch";
 import HeroComponent from "../components/Hero";
 import About from "../components/About";
 import Repo from "../components/Repo";
-import { DEVTO_USER_URL } from "../helper/contansts";
 import NavComponent from "../components/NavComponent";
 import Blog from "../components/Blog";
 import Footer from "../components/Footer";
 
-const username  = process.env.NEXT_PUBLIC_USERNAME
+const username = process.env.NEXT_PUBLIC_USERNAME;
 
 export default function PortfolioPage({
   devData,
@@ -20,7 +18,6 @@ export default function PortfolioPage({
   githubUserData,
 }: any) {
   // const {saveData}:any = useSaveData();
-  const router = useRouter();
   console.log(username);
   const [data, setData] = React.useState<string | null>("");
 
@@ -54,7 +51,7 @@ export default function PortfolioPage({
     </div>
   );
 }
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const devCommunity = await fetch(
     //@ts-ignore
     `https://dev.to/api/articles?username=${username}`
@@ -67,13 +64,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     //@ts-ignore
     `https://api.github.com/users/${username}/repos?per_page=20`
   );
-  //@ts-ignore
-
-  // const devUser = await fetch(`${DEVTO_USER_URL}${params.username}`);
 
   const githubUserData = await githubUser.json();
   const githubRepoData = await githubRepo.json();
   const devData = await devCommunity.json();
-  return { props: { devData, githubRepoData, githubUserData,  } };
+  return { props: { devData, githubRepoData, githubUserData } };
 };
-//https://dev.to/api/users/by_username?url=colbyfayock
