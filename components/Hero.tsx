@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 interface Props {
   name: string;
   image: string;

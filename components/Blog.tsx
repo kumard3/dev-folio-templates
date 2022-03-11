@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { formatPostDate } from "../helper";
 
@@ -21,11 +22,8 @@ export default function Blog({ devData }: any) {
             index: number
           ) => {
             return (
-              <a href={data.url} target="_blank" >
-                <div
-                  key={index}
-                  className="flex  my-5 flex-col md:flex-row items-center  overflow-hidden "
-                >
+              <a key={index} href={data.url} target="_blank" rel="noreferrer">
+                <div className="flex  my-5 flex-col md:flex-row items-center  overflow-hidden ">
                   <div className="flex flex-col gap-2 p-4 lg:p-6 max-w-2xl">
                     <span className="text-gray-400  font-mono  ">
                       {formatPostDate(data.published_at)}
